@@ -53,10 +53,10 @@ namespace ConsoleApp2
             {
                 using (GameContext db = new GameContext())
                 {
-                    Game game1 = new Game(1, "MarioBattles","SuperStudio","ActionRPG", DateTime.UtcNow);
+                    //Game game1 = new Game(1, "MarioBattles","SuperStudio","ActionRPG", DateTime.UtcNow);
                     Game game2 = new Game(2, "TetrisWars", "UltraStudio", "ActionRPG", DateTime.UtcNow);
 
-                    db.Game.Add(game1);
+                    //db.Game.Add(game1);
                     db.Game.Add(game2);
                     db.SaveChanges();
 
