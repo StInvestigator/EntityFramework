@@ -4,38 +4,40 @@ using Microsoft.EntityFrameworkCore;
 namespace ConsoleApp2
 {
 
-    public class Game
+    public class TournamentTop
     {
         public int Id { set; get; }
         public string Name { set; get; }
-        public string Creator { set; get; }
-        public string Style { set; get; }
-        public DateTime ReleaseDate { set; get; }
+        public int Top { set; get; }
+        public int Wins { set; get; }
+        public int Loses { set; get; }
+        public int Draws { set; get; }
 
-        public Game()
+        public TournamentTop()
         {
 
         }
-        public Game(int id, string name, string creator, string style, DateTime releaseDate)
+        public TournamentTop(int id, string name, int top, int wins, int loses, int draws)
         {
             Id = id;
             Name = name;
-            Creator = creator;
-            Style = style;
-            ReleaseDate = releaseDate;
+            Top = top;
+            Wins = wins;
+            Loses = loses;
+            Draws = draws;
         }
 
         public void Print()
         {
-            Console.WriteLine($"Id: {Id}, Name: {Name}, Creator: {Creator}, Style: {Style}, Release Date: {ReleaseDate}");
+            Console.WriteLine($"Id: {Id}, Name: {Name}, Top: {Top}, Wins: {Wins}, Loses: {Loses}, Draws: {Draws}");
         }
     }
-    public class GameContext : DbContext
+    public class TournamentTopContext : DbContext
     {
-        public string connectionString = @"Data Source=DESKTOP-OF66R01\SQLEXPRESS;Initial Catalog=GamesDB;Integrated Security=True";
-        public DbSet<Game> Game { set; get; }
+        public string connectionString = @"Data Source=DESKTOP-OF66R01\SQLEXPRESS;Initial Catalog=TournamentTopDB;Integrated Security=True";
+        public DbSet<TournamentTop> TournamentTop { set; get; }
 
-        public GameContext()
+        public TournamentTopContext()
         {
             Database.EnsureCreated();
         }
@@ -44,26 +46,27 @@ namespace ConsoleApp2
             optionsBuilder.UseSqlServer(connectionString);
         }
     }
-    //public string connectionString = @"Data Source=AVL_Laptop\SQLEXPRESS;Initial Catalog=AnimalDB;Integrated Security=True;Encrypt=False";
     internal class Program
     {
         static void Main(string[] args)
         {
             try
             {
-                using (GameContext db = new GameContext())
+                using (TournamentTopContext db = new TournamentTopContext())
                 {
-                    Game game1 = new Game(1, "MarioBattles","SuperStudio","ActionRPG", DateTime.UtcNow);
-                    Game game2 = new Game(2, "TetrisWars", "UltraStudio", "ActionRPG", DateTime.UtcNow);
+                    TournamentTop tournamentTop1 = new TournamentTop(1, "Best team ever",1,20,0,1);
+                    TournamentTop tournamentTop2 = new TournamentTop(2, "Not the best team ever", 1, 10, 10, 1);
+                    TournamentTop tournamentTop3 = new TournamentTop(3, "Chempions", 1, 0, 20, 0);
 
-                    db.Game.Add(game1);
-                    db.Game.Add(game2);
+                    db.TournamentTop.Add(tournamentTop1);
+                    db.TournamentTop.Add(tournamentTop2);
+                    db.TournamentTop.Add(tournamentTop3);
                     db.SaveChanges();
 
-                    var games = db.Game.ToList();
-                    foreach (var game in games)
+                    var tournamentTops = db.TournamentTop.ToList();
+                    foreach (var tournamentTop in tournamentTops)
                     {
-                        game.Print();
+                        tournamentTop.Print();
                     }
                 }
             }
@@ -75,7 +78,6 @@ namespace ConsoleApp2
             {
                 Console.WriteLine(ex.Message);
             }
-
         }
     }
 }
